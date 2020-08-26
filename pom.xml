@@ -50,28 +50,40 @@
 	</dependencies>
 
 	<build>
-	<finalName>RestfulDemo1</finalName>
+		<finalName>RestfulDemo1</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.3.0.603</version>
+				<executions>
+					<execution>
+						<phase>verify</phase>
+						<goals>
+							<goal>sonar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>io.fabric8</groupId>
 				<artifactId>docker-maven-plugin</artifactId>
 				<version>0.27.2</version>
-				<configuration> 
+				<configuration>
 
-					 <dockerHost>${dockerhost}</dockerHost> 
-					 <authConfig>
-					 	<username>${username}</username>
-					 	<password>${password}</password>
-					 </authConfig>
+					<dockerHost>${dockerhost}</dockerHost>
+					<authConfig>
+						<username>${username}</username>
+						<password>${password}</password>
+					</authConfig>
 					<!-- this is for Mac and Amazon Linux -->
 					<!-- <dockerHost>unix:///var/run/docker.sock</dockerHost> -->
 
-				<!--	<verbose>true</verbose> -->
+					<!-- <verbose>true</verbose> -->
 
 					<!-- Needed if pushing to DockerHub: preferred to store these in local 
 						environment (see the course) -->
@@ -81,7 +93,7 @@
 							<name>payalbnsl/restfuldemo</name>
 							<build>
 								<dockerFileDir>${project.basedir}/src/main/resources/</dockerFileDir>
-								
+
 								<assembly>
 									<descriptorRef>artifact</descriptorRef>
 								</assembly>
@@ -94,7 +106,7 @@
 				</configuration>
 				<executions>
 					<execution>
-						<phase>verify</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>build</goal>
 						</goals>
